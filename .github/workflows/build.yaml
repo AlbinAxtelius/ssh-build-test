@@ -4,12 +4,15 @@ jobs:
   fake-build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Fake build
         run: |
           mkdir dist
           date > dist/build.txt
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Upload file
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" |\
-          scp -i /dev/stdin\
+          scp -i ${{ env.SSH_AUTH_SOCK }}
           -r dist ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/dist
