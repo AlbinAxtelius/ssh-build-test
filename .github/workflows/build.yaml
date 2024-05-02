@@ -10,6 +10,6 @@ jobs:
           date > dist/build.txt
       - name: Upload file
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}"
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" |\
           scp -i /dev/stdin\
-          dist ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/dist
+          -r dist ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/dist
