@@ -1,0 +1,10 @@
+name: SSH build
+on: [push]
+jobs:
+  fake-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fake build
+        run: |
+          mkdir dist
+          date > dist/build.txt
